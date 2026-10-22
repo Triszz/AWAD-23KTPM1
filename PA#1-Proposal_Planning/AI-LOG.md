@@ -23,29 +23,123 @@ Project: LabelCheck
 
 - **By hand:** reading the Classroom dates and agreeing the split of work.
 
-## 2026-10-20 — choosing the idea
+## 2026-10-20 — choosing a product idea
+
+- **Tool:** Claude (chat, claude.ai).
+
+- **Asked for:** product ideas that score well on the rubric, mainly criteria 1 (named user) and 2 (an LLM feature with a nameable cost of being wrong).
+
+- **Kept:** the method of choosing an idea by those two criteria first, and the habit of checking each idea's data source before committing.
+
+- **Rejected:** (1) ReplyDesk, reply drafts for a small online shop: The team felt that simply copying and pasting customer questions into an LLM, then reviewing the output before sending it back to the customer, was not a good approach. (2) A rental-contract reader for students: real contracts are hard to collect, so evaluation data would have been weak. (3) A university-regulations question tool: only mentioned as an option, never developed.
+
+- **By hand:** the decision to drop each idea and to ask for another.
+
+## 2026-10-20 — shaping LabelCheck
 
 - **Tool:** Claude (chat).
 
-- **Asked for:** candidate ideas for a standalone web app with an LLM feature where a wrong answer has a cost, small data, and an easy demo.
+- **Asked for:** an allergen-checking idea whose data we can collect ourselves (photos of labels from a supermarket).
 
-- **Kept:** the selection questions (a named user, a cost of being wrong we can name, whether we can build an eval set in about two weeks).
+- **Kept:** the single LLM feature (read a label, list ingredients that may come from the user's allergens, quote the label verbatim), and the three results "found / possibly present / not seen on the label". The app never says "safe".
 
-- **Rejected:** every idea the assistant proposed or recommended: order intake for sellers, scam check, expense-claim review, boarding-house maintenance triage, CV tailoring and others. We rejected them because of data size, platform integration and fit. The assistant also declined our request to invent a real interview, so Nam is labelled a persona.
+- **Changed:** Claude's first version was a generic checker for Vietnamese labels, for a user allergic to peanuts and shellfish. We changed it in four steps: (a) the user is a Vietnamese person who cannot read English and buys imported food, so the labels are in English; (b) scope covers both Vietnamese and English labels; (c) scope also covers chemical names and additive codes (E-numbers), which is where allergens hide; (d) we corrected Claude's reading that the product only handles egg and peanut: those were examples, and each user picks their own allergens (e.g. milk and peanut).
 
-- **By hand:** LabelCheck came from our own discussion, not from the assistant, and write who proposed it.
+- **Rejected:** Claude's first version without the English-label context. While the current focus is on recognizing Vietnamese, the team believes it is possible to expand to include English, as products with English labeling also frequently appear in stores.
 
-## 2026-10-21 — evaluating and revising the proposal
+- **By hand:** the problem insight (language barrier plus hidden names) and all four scope decisions above. Claude wrote the sentences; the direction was ours.
+
+## 2026-10-21 — writing the two-page proposal and Word files
+
+- **Tool:** Claude (chat, file creation).
+
+- **Asked for:** a two-page proposal in English covering the six sections the brief lists, as a Word file, rewritten each time our scope changed (files v1 to v4).
+
+- **Kept:** the section structure, the cost-of-being-wrong paragraph (health first, not reversible once eaten), the evaluation idea (about 40 labelled labels, count missed allergens and false alarms), the scope out-list.
+
+- **Changed:** scope, user and risks after each change in the entry above. We also asked why the second risk had changed; Claude had swapped the "blurry photos" risk for "hidden names" without saying so, and we kept both.
+
+- **Rejected:** its earlier ReplyDesk text in full.
+
+- **By hand:** The members check together.
+
+## 2026-10-21 — plan, ownership and technology
 
 - **Tool:** Claude (chat).
 
-- **Asked for:** an estimated rubric score for our LabelCheck draft, and what to fix.
+- **Asked for:** a six-checkpoint plan and one-line technology justifications.
 
-- **Kept:** the plan table aligned to PA#1–PA#6 with the two of us as owners; PostgreSQL instead of SQLite; Docker and CI in the stack; the guardrails (lexicon scan alongside the LLM, quote check, "unreadable" result); keeping the allergy profile out of prompts; adding 100 text-only strings to the eval set.
+- **Kept:** the checkpoint work items as a starting point; Next.js, SQLite, a free hosting tier.
 
-- **Changed:** added the sentence that Nam is a persona, the PA#6 date, and đậu phộng; and we cut §2, §3 and §6 to fit two pages.
+- **Changed:** this first plan was later replaced; real dates, real owners and the new stack are in the "applying the review" entry below.
+
+- **By hand:** owners and dates; the model provider and its price. Claude's token estimate (about 2,000 input and 200 output tokens per label) is a guess we have not yet checked.
+
+## 2026-10-22 — this log (first pass)
+
+- **Tool:** Claude (chat).
+
+- **Asked for:** a first draft of this file from the chat history, using the course template.
+
+- **Kept:** the entries above after checking each against what we actually did.
+
+- **By hand:** We can explain entry because the decisions in them were ours.
+
+## 2026-10-22 — scoring v4 against the rubric, Vietnamese summary
+
+- **Tool:** Claude (chat).
+
+- **Asked for:** our idea summarised in Vietnamese, and a score of the proposal against the PA#1 rubric.
+
+- **Kept:** the list of things to fix: empty placeholders, SQLite not persisting on Vercel, and checkpoint 1 being too heavy for one owner.
+
+- **Changed:** nothing in the document at this step. Claude's estimate (about 83 as written, about 91 once filled in) was later shown to be too optimistic about the plan; see the "applying the review" entry.
+
+- **Rejected:** taking Claude’s 85–88 as our number; we scored each criterion ourselves after the review.
+
+- **By hand:** no writing. The scoring was only an input to our decisions.
+
+## 2026-10-22 — scope: chemical names and the 8 groups
+
+- **Tool:** Claude (chat, Word file editing).
+
+- **Asked for:** whether chemical names are inside the scope; later, a fix so the plan matches the scope; and what the "8 allergen groups" are and why 8.
+
+- **Kept:** Claude's answer that chemical names are in scope when they trace to one of the 8 groups; the new out-of-scope line "chemical names or codes unrelated to the 8 groups"; its explanation of the 8 groups (the main regulated allergen groups; the US now lists 9 with sesame, the EU 14), which we kept at 8 to limit the semester's work.
+
+- **Changed:** Claude read our plan as deep support only for milk and peanut, because CP1 and risk 1 named only those two. We corrected it: all 8 groups get the same level of support. Claude then edited CP1, risk 1 and the test-set rule for all 8 groups (v5: about 60 reference entries, at least 5 labels per group).
+
+- **Rejected:** the milk-and-peanut-only reading, and the alternative Claude offered of keeping 8 groups in the UI but evaluating only two.
+
+- **By hand:** the decision that all 8 groups are supported equally.
+
+## 2026-10-22 — cutting the workload
+
+- **Tool:** Claude (chat, Word file editing).
+
+- **Asked for:** lighter numbers, because more labels per group made checkpoint 1 too hard; then one sentence saying that figures for rare groups are only indicative.
+
+- **Kept:** v6 numbers (about 40 reference entries, about 5 per group; at least 3 labels per group; still 40 labels in total); in v7 a sentence in "How we would know" naming shellfish and tree nuts as the groups likely to have few examples.
+
+- **Changed:** from v5's 60 entries and 5 labels per group, which we judged too much.
+
+- **Rejected:** v5's numbers. The idea that shellfish and tree nuts are the hardest to find on Vietnamese shelves is Claude's guess; we have not checked it.
+
+- **By hand:** the decision to cut the workload and to say the limit openly in the proposal.
+
+## 2026-10-22 — this log
+
+- **Tool:** Claude (chat).
+
+- **Asked for:** add this session's work to the log from the chat history, using the course template.
+
+- **Kept:** all earlier entries as they were, except that the team line is now Trí and Huy and one placeholder in the "plan, ownership and technology" entry points to the v8 entry.
+
+- **Changed:** the data section below. It said we send the allergen group names to the model; v8 sends only the label and filters in our code.
 
 - **Rejected:** nothing.
+
+- **By hand:** We can explain entry because the decisions in them were ours.
 
 ## 2026-10-22 — shortening to two pages and filling this log
 
@@ -70,3 +164,15 @@ Project: LabelCheck
 - **Changed:** updated the evidence lines to match the final proposal.
 
 - **By hand:** the "What I did not manage" section.
+
+## 2026-10-22 — second cut so §6 fits on page 2
+
+- **Tool:** Claude (chat).
+
+- **Asked for:** a further cut of the proposal, because the PDF still ran onto page 3 (only §6).
+
+- **Kept:** the shorter text of §1–§6. The plan, dates, owners, risk triggers and pass thresholds are unchanged. The assistant also removed a stray "it." from the Plan evidence line and updated the evidence lines to the merged "Who is harmed, how much, reversible?" heading.
+
+- **Changed:** nothing.
+
+- **By hand:** our own read-through of the final text.
