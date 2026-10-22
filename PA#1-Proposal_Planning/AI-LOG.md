@@ -45,7 +45,7 @@ Project: LabelCheck
 
 - **Changed:** Claude's first version was a generic checker for Vietnamese labels, for a user allergic to peanuts and shellfish. We changed it in four steps: (a) the user is a Vietnamese person who cannot read English and buys imported food, so the labels are in English; (b) scope covers both Vietnamese and English labels; (c) scope also covers chemical names and additive codes (E-numbers), which is where allergens hide; (d) we corrected Claude's reading that the product only handles egg and peanut: those were examples, and each user picks their own allergens (e.g. milk and peanut).
 
-- **Rejected:** Claude's first version without the English-label context. While the current focus is on recognizing Vietnamese, the team believes it is possible to expand to include English, as products with English labeling also frequently appear in stores.
+- **Rejected:** Claude's first version without the English-label context, because imported products with English-only ingredient lists are where Nam's problem is biggest, and they also appear often in stores.
 
 - **By hand:** the problem insight (language barrier plus hidden names) and all four scope decisions above. Claude wrote the sentences; the direction was ours.
 
@@ -53,7 +53,7 @@ Project: LabelCheck
 
 - **Tool:** Claude (chat, file creation).
 
-- **Asked for:** a two-page proposal in English covering the six sections the brief lists, as a Word file, rewritten each time our scope changed (files v1 to v4).
+- **Asked for:** a two-page proposal in English covering the six sections the brief lists, as a Word file, rewritten each time our scope changed (several versions).
 
 - **Kept:** the section structure, the cost-of-being-wrong paragraph (health first, not reversible once eaten), the evaluation idea (about 40 labelled labels, count missed allergens and false alarms), the scope out-list.
 
@@ -83,9 +83,9 @@ Project: LabelCheck
 
 - **Kept:** the entries above after checking each against what we actually did.
 
-- **By hand:** We can explain entry because the decisions in them were ours.
+- **By hand:** We can explain every entry because the decisions in them were ours.
 
-## 2026-10-22 — scoring v4 against the rubric, Vietnamese summary
+## 2026-10-22 — scoring the early draft against the rubric, Vietnamese summary
 
 - **Tool:** Claude (chat).
 
@@ -95,7 +95,7 @@ Project: LabelCheck
 
 - **Changed:** nothing in the document at this step. Claude's estimate (about 83 as written, about 91 once filled in) was later shown to be too optimistic about the plan; see the "applying the review" entry.
 
-- **Rejected:** taking Claude’s 85–88 as our number; we scored each criterion ourselves after the review.
+- **Rejected:** Claude’s early estimate (about 83 as written, about 91 once filled in) as our number, because the later review showed the plan did not match the course milestones.
 
 - **By hand:** no writing. The scoring was only an input to our decisions.
 
@@ -107,7 +107,7 @@ Project: LabelCheck
 
 - **Kept:** Claude's answer that chemical names are in scope when they trace to one of the 8 groups; the new out-of-scope line "chemical names or codes unrelated to the 8 groups"; its explanation of the 8 groups (the main regulated allergen groups; the US now lists 9 with sesame, the EU 14), which we kept at 8 to limit the semester's work.
 
-- **Changed:** Claude read our plan as deep support only for milk and peanut, because CP1 and risk 1 named only those two. We corrected it: all 8 groups get the same level of support. Claude then edited CP1, risk 1 and the test-set rule for all 8 groups (v5: about 60 reference entries, at least 5 labels per group).
+- **Changed:** Claude read our plan as deep support only for milk and peanut, because CP1 and risk 1 named only those two. We corrected it: all 8 groups get the same level of support. Claude then edited CP1, risk 1 and the test-set rule for all 8 groups (first about 60 reference entries, at least 5 labels per group).
 
 - **Rejected:** the milk-and-peanut-only reading, and the alternative Claude offered of keeping 8 groups in the UI but evaluating only two.
 
@@ -119,27 +119,41 @@ Project: LabelCheck
 
 - **Asked for:** lighter numbers, because more labels per group made checkpoint 1 too hard; then one sentence saying that figures for rare groups are only indicative.
 
-- **Kept:** v6 numbers (about 40 reference entries, about 5 per group; at least 3 labels per group; still 40 labels in total); in v7 a sentence in "How we would know" naming shellfish and tree nuts as the groups likely to have few examples.
+- **Kept:** the lighter numbers (about 40 reference entries, about 5 per group; at least 3 labels per group; still 40 labels in total); then a sentence in "How we would know" naming shellfish and tree nuts as the groups likely to have few examples.
 
-- **Changed:** from v5's 60 entries and 5 labels per group, which we judged too much.
+- **Changed:** from the first 60 entries and 5 labels per group, which we judged too much.
 
-- **Rejected:** v5's numbers. The idea that shellfish and tree nuts are the hardest to find on Vietnamese shelves is Claude's guess; we have not checked it.
+- **Rejected:** the heavier numbers (60 entries, 5 labels per group). The idea that shellfish and tree nuts are the hardest to find on Vietnamese shelves is Claude's guess; we have not checked it.
 
 - **By hand:** the decision to cut the workload and to say the limit openly in the proposal.
 
-## 2026-10-22 — this log
+## 2026-10-22 — applying the review and rebuilding the proposal
+
+- **Tool:** Claude (chat, file creation).
+
+- **Asked for:** complete the proposal using a written review we pasted in and the rubric.
+
+- **Kept:** the plan on PA#1–PA#6 with Trí and Huy as owners; React + Express + PostgreSQL + Docker with CI; Claude Haiku 5.5; the privacy fix (only the label goes to the model, our code applies the profile); the guardrails (lexicon scan, quote check, "unreadable" result); 100+ text-only test strings; the persona wording.
+
+- **Changed:** the stack changed from our first version (Next.js, SQLite) to React + Express + PostgreSQL + Docker with CI, because SQLite on Vercel does not persist. The plan changed from product tasks to the course milestones PA#1–PA#6, with Trí and Huy as owners. The pass threshold (5% missed, 20% false alarms) was proposed by Claude, not taken from our data.
+
+- **Rejected:** Next.js and SQLite on Vercel; Claude's first score estimate, which had missed that our checkpoints did not match the course milestones.
+
+- **By hand:** the real dates from Classroom, student IDs, repository link, and our read-through.
+
+## 2026-10-22 — this log (second pass)
 
 - **Tool:** Claude (chat).
 
 - **Asked for:** add this session's work to the log from the chat history, using the course template.
 
-- **Kept:** all earlier entries as they were, except that the team line is now Trí and Huy and one placeholder in the "plan, ownership and technology" entry points to the v8 entry.
+- **Kept:** all earlier entries as they were, except that the team line is now Trí and Huy and one placeholder in the "plan, ownership and technology" entry points to the "applying the review" entry.
 
-- **Changed:** the data section below. It said we send the allergen group names to the model; v8 sends only the label and filters in our code.
+- **Changed:** the data section at the top of this file. It said we send the allergen group names to the model; the final proposal sends only the label and filters in our code.
 
 - **Rejected:** nothing.
 
-- **By hand:** We can explain entry because the decisions in them were ours.
+- **By hand:** We can explain every entry because the decisions in them were ours.
 
 ## 2026-10-22 — shortening to two pages and filling this log
 
@@ -161,7 +175,7 @@ Project: LabelCheck
 
 - **Kept:** the total of 85, which the assistant judged to be about right and slightly conservative.
 
-- **Changed:** updated the evidence lines to match the final proposal.
+- **Changed:** the split of marks (17, 22, 13, 16, 9, 8) came from the assistant’s draft; we checked each mark against the rubric and updated the evidence lines to match the final proposal.
 
 - **By hand:** the "What I did not manage" section.
 
